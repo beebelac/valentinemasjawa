@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be My Valentine?</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f9e3e3;
+            font-family: 'Arial', sans-serif;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        .container {
+            text-align: center;
+            transition: all 0.5s ease;
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            color: #d32f2f;
+        }
+
+        .header_text {
+            font-size: 3em;
+            color: #d32f2f;
+        }
+        
+        .buttons {
+            margin-top: 20px;
+        }
+        
+        .yes-button, .card-button, .login-btn {
+            font-size: 1.5em;
+            padding: 15px 30px;
+            margin: 10px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+
+        .card-button {
+            background-color: #e91e63;
+            animation: pulse 1.5s infinite;
+        }
+
+        .login-btn {
+            background-color: #ff4d6d;
+            font-size: 1em;
+            padding: 10px 20px;
+        }
+        
+        .no-button {
+            font-size: 1.5em;
+            padding: 10px 20px;
+            background-color: #f44336;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .gif_container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Styling Form Password */
+        #password-section {
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        input[type="number"], input[type="password"] {
+            padding: 12px;
+            border: 2px solid #ffb1b1;
+            border-radius: 10px;
+            outline: none;
+            width: 150px;
+            font-size: 1.2em;
+            text-align: center;
+            margin-bottom: 10px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Styling Kartu Ucapan */
+        .card {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            max-width: 400px;
+            border: 2px dashed #d32f2f;
+            position: relative;
+            transform: scale(0.8);
+            opacity: 0;
+            transition: all 0.5s ease;
+            text-align: center;
+        }
+
+        .card.show {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .nailong-corner {
+            position: absolute;
+            top: -60px;
+            right: -35px;
+            width: 130px;
+            z-index: 20;
+            pointer-events: none;
+        }
+
+        .card-text {
+            color: #555;
+            line-height: 1.6;
+            font-size: 1.1em;
+            font-style: italic;
+            margin-top: 10px;
+        }
+
+        .heart-icon {
+            color: #d32f2f;
+            font-size: 2em;
+            margin-bottom: 5px;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        #yes-gif {
+            max-width: 300px; 
+        }
+    </style>
+</head>
+<body>
+
+    <div id="main-container" class="container">
+        <h1>Will you be my Valentine?</h1>
+        <div class="buttons">
+            <button class="yes-button" onclick="handleYesClick()">Yes</button>
+            <button class="no-button" onclick="handleNoClick()">No</button>
+        </div>
+        <div class="gif_container">
+            <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExbW5lenZyZHI5OXM2eW95b3pmMG40cWVrMDhtNjVuM3A4dGNxa2g2dSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/VM1fcpu2bKs1e2Kdbj/giphy.gif" alt="Cute GIF">
+        </div>
+    </div>
+
+    <div id="yes-container" class="container hidden">
+        <h1 class="header_text">Knew you would say yes! ❤️</h1>
+        <div class="gif_container">
+            <img id="yes-gif" src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExMmo3c3l5ODh3ZGN6NHhhaDE2Mjg1ZjkwOXczdDFxbWM3dTBtaW9zaiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/9XY4f3FgFTT4QlaYqa/giphy.gif">
+        </div>
+        <button class="card-button" onclick="showPasswordInput()">Klik Aku💌</button>
+    </div>
+
+    <div id="password-section" class="hidden">
+        <h2 style="color: #ff4d6d; margin-top: 0;">Eits, masukin kode rahasia dulu:</h2>
+        <input type="number" id="pinInput" placeholder="4 Digit Kode">
+        <button class="login-btn" onclick="checkPassword()">Buka Kartu ✨</button>
+        <p id="error-msg" style="color: red; font-size: 0.9em;" class="hidden">Kode salah! Coba lagi.</p>
+    </div>
+
+    <div id="card-container" class="card hidden">
+        <img src="https://media.tenor.com/6878496450289521111/nailong-yellow-dragon.gif" class="nailong-corner" alt="Nailong">
+        <div class="heart-icon">❤️</div>
+        <div class="card-text">
+            "Happy valentine sayang, makasih ya udh sayang sama aku sampe skrg, meskipun kamu jarang ngasih kabar, ngabarinnya kalo ditanya dulu😤, gapapa aku tetep cinta sama kamu😙. <br><br>
+            Maaf ya cuma bisa ngasih coklat aja gabisa ngasih bunga😿. Sekali lagi makasihh udh sayang sama mas mas jawa ini, <b>i love u sayangg</b>"
+        </div>
+    </div>
+
+    <script>
+        const messages = [
+            "Are you sure?", "Really sure??", "Are you positive?",
+            "Pookie please...", "Just think about it!",
+            "If you say no, I will be really sad...",
+            "I will be very sad...", "I will be very very very sad...",
+            "Ok fine, I will stop asking...", "Just kidding, say yes please! ❤️"
+        ];
+
+        let messageIndex = 0;
+
+        function handleNoClick() {
+            const noButton = document.querySelector('.no-button');
+            const yesButton = document.querySelector('.yes-button');
+            noButton.textContent = messages[messageIndex];
+            messageIndex = (messageIndex + 1) % messages.length;
+            const currentSize = parseFloat(window.getComputedStyle(yesButton).fontSize);
+            yesButton.style.fontSize = `${currentSize * 1.5}px`;
+        }
+
+        function handleYesClick() {
+            document.getElementById('main-container').classList.add('hidden');
+            document.getElementById('yes-container').classList.remove('hidden');
+        }
+
+        function showPasswordInput() {
+            document.getElementById('yes-container').classList.add('hidden');
+            document.getElementById('password-section').classList.remove('hidden');
+        }
+
+        function checkPassword() {
+            const pin = document.getElementById('pinInput').value;
+            if (pin === "2829") {
+                document.getElementById('password-section').classList.add('hidden');
+                const card = document.getElementById('card-container');
+                card.classList.remove('hidden');
+                setTimeout(() => card.classList.add('show'), 100);
+            } else {
+                document.getElementById('error-msg').classList.remove('hidden');
+            }
+        }
+    </script>
+</body>
+</html>
